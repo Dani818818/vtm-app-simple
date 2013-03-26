@@ -20,6 +20,8 @@ public class DrawableOverlay extends Overlay {
 			super(mapView);
 
 			SymbolItem it = new SymbolItem();
+
+			// draw item at center
 			it.billboard = false;
 			it.x = 0;
 			it.y = 0;
@@ -42,7 +44,7 @@ public class DrawableOverlay extends Overlay {
 			//mMapPosition.copy(curPos);
 
 			if (!initialized) {
-				// fix at initial position
+				// fix at initial position, (see RenderOverlay.setMatrix, how it is used)
 				mMapPosition.copy(curPos);
 
 				//updateMapPosition();
@@ -55,6 +57,10 @@ public class DrawableOverlay extends Overlay {
 				// compile VBOs uploaded and drawn (i.e. flag to call 'BasicOverlay.compile()')
 				newData = true;
 			}
+
+			// this should allow to draw the item at any lat/lon
+			// (set center to be at lat/lon):
+			mMapPosition.setFromLatLon(53.1, 8.8, mMapPosition.zoomLevel);
 		}
 	}
 
