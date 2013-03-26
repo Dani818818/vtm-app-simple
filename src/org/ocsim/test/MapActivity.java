@@ -20,15 +20,12 @@ public class MapActivity extends org.oscim.view.MapActivity {
 
 		mMap = (MapView) findViewById(R.id.mapView);
 
-		// MapOptions options = new MapOptions(MapDatabases.PBMAP_READER);
-		// options.put("url",
-		// "http://city.informatik.uni-bremen.de:80/osmstache/test/");
-
+		/* MapDatabase options */
 		MapOptions options = new MapOptions(MapDatabases.OSCIMAP_READER);
-		options.put("url",
-					"http://city.informatik.uni-bremen.de:80/osci/map-live/");
+		options.put("url", "http://city.informatik.uni-bremen.de:80/osci/map-live/");
 
-		//		MapOptions options = new MapOptions(MapDatabases.MAP_READER);
+		/* load a mapsforge file */
+		// MapOptions options = new MapOptions(MapDatabases.MAP_READER);
 		// options.put("file",
 		// Environment.getExternalStorageDirectory().getPath() +"/bremen.map");
 		//		options.put("file", Environment.getExternalStorageDirectory().getPath()
@@ -36,18 +33,23 @@ public class MapActivity extends org.oscim.view.MapActivity {
 
 		mMap.setMapDatabase(options);
 
-		// configure the MapView and activate the zoomLevel buttons
+		/* get map center from map file */
+		//	MapPosition mapCenter = mMap.getMapFileCenter();
+		//	if (mapCenter == null)
+		// 		mMap.setMapCenter(new MapPosition(new GeoPoint(53.1f, 8.8f), (byte) 12, 1));
+		//	else
+		//		mMap.setMapCenter(mapCenter);
+
+		/* configure the MapView and activate the zoomLevel buttons */
 		mMap.setClickable(true);
 		mMap.setFocusable(true);
 
-		//		MapPosition mapCenter = mMap.getMapFileCenter();
-		//		if (mapCenter == null)
-		//			mMap.setMapCenter(new MapPosition(new GeoPoint(53.1f, 8.8f),
-		//			(byte) 12, 1));
-		//		else
-		//			mMap.setMapCenter(mapCenter);
+		/* add tile grid overlay */
+		mMap.getOverlayManager().add(new GenericOverlay(mMap, new GridOverlay(mMap)));
 
-		mMap.getOverlayManager().add(new GenericOverlay(mMap,new GridOverlay(mMap)));
+		mMap.getOverlayManager().add(new EventsOverlay(mMap));
+
+		mMap.getOverlayManager().add(0,new DrawableOverlay(mMap));
 	}
 
 	@Override
