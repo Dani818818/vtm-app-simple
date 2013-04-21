@@ -60,7 +60,7 @@ public class DrawableOverlay extends Overlay {
 
 			// this should allow to draw the item at any lat/lon
 			// (set center to be at lat/lon):
-			mMapPosition.setFromLatLon(53.1, 8.8, mMapPosition.zoomLevel);
+			//mMapPosition.setFromLatLon(53.1, 8.8, mMapPosition.zoomLevel);
 		}
 	}
 

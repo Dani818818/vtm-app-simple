@@ -2,8 +2,8 @@ package org.ocsim.test;
 
 import org.oscim.database.MapDatabases;
 import org.oscim.database.MapOptions;
-import org.oscim.overlay.GenericOverlay;
-import org.oscim.renderer.overlays.GridOverlay;
+import org.oscim.layers.tile.TileLayer;
+import org.oscim.theme.InternalRenderTheme;
 import org.oscim.view.MapView;
 
 import android.os.Bundle;
@@ -20,36 +20,46 @@ public class MapActivity extends org.oscim.view.MapActivity {
 
 		mMap = (MapView) findViewById(R.id.mapView);
 
-		/* MapDatabase options */
-		MapOptions options = new MapOptions(MapDatabases.OSCIMAP_READER);
-		options.put("url", "http://city.informatik.uni-bremen.de:80/osci/map-live/");
+		MapOptions options = new MapOptions(MapDatabases.PBMAP_READER);
+		options.put("url", "http://city.informatik.uni-bremen.de:80/osmstache/test/");
 
-		/* load a mapsforge file */
+		// MapOptions options = new MapOptions(MapDatabases.OSCIMAP_READER);
+		// options.put("url",
+		// "http://city.informatik.uni-bremen.de:80/osci/map-live/");
+
 		// MapOptions options = new MapOptions(MapDatabases.MAP_READER);
+		// // options.put("file",
+		// // Environment.getExternalStorageDirectory().getPath()
+		// +"/bremen.map");
 		// options.put("file",
-		// Environment.getExternalStorageDirectory().getPath() +"/bremen.map");
-		//		options.put("file", Environment.getExternalStorageDirectory().getPath()
-		//				+ "/Download/berlin.map");
+		// Environment.getExternalStorageDirectory().getPath()
+		// + "/Download/berlin.map");
 
-		mMap.setMapDatabase(options);
+		// Base Layer
 
-		/* get map center from map file */
-		//	MapPosition mapCenter = mMap.getMapFileCenter();
-		//	if (mapCenter == null)
-		// 		mMap.setMapCenter(new MapPosition(new GeoPoint(53.1f, 8.8f), (byte) 12, 1));
-		//	else
-		//		mMap.setMapCenter(mapCenter);
+		
+		TileLayer over = new TileLayer(mMap);
+		over.setMapDatabase(new MapOptions(MapDatabases.TEST_READER));
+		over.setRenderTheme(InternalRenderTheme.TRONRENDER);
+		mMap.getOverlayManager().add(over);
 
-		/* configure the MapView and activate the zoomLevel buttons */
+		TileLayer l = mMap.setBaseMap(options);
+		l.setRenderTheme(InternalRenderTheme.DEFAULT);
+
+		// configure the MapView and activate the zoomLevel buttons
 		mMap.setClickable(true);
 		mMap.setFocusable(true);
 
-		/* add tile grid overlay */
-		mMap.getOverlayManager().add(new GenericOverlay(mMap, new GridOverlay(mMap)));
+		// MapPosition mapCenter = mMap.getMapFileCenter();
+		// if (mapCenter == null)
+		// mMap.setMapCenter(new MapPosition(new GeoPoint(53.1f, 8.8f),
+		// (byte) 12, 1));
+		// else
+		//
+		// mMap.setMapCenter(mapCenter);
 
-		mMap.getOverlayManager().add(new EventsOverlay(mMap));
-
-		mMap.getOverlayManager().add(0,new DrawableOverlay(mMap));
+		// mMap.getOverlayManager().add(new GenericOverlay(mMap,new
+		// GridOverlay(mMap)));
 	}
 
 	@Override
