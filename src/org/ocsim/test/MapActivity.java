@@ -20,46 +20,29 @@ public class MapActivity extends org.oscim.view.MapActivity {
 
 		mMap = (MapView) findViewById(R.id.mapView);
 
-		MapOptions options = new MapOptions(MapDatabases.PBMAP_READER);
-		options.put("url", "http://city.informatik.uni-bremen.de:80/osmstache/test/");
-
-		// MapOptions options = new MapOptions(MapDatabases.OSCIMAP_READER);
-		// options.put("url",
-		// "http://city.informatik.uni-bremen.de:80/osci/map-live/");
-
-		// MapOptions options = new MapOptions(MapDatabases.MAP_READER);
-		// // options.put("file",
-		// // Environment.getExternalStorageDirectory().getPath()
-		// +"/bremen.map");
-		// options.put("file",
-		// Environment.getExternalStorageDirectory().getPath()
-		// + "/Download/berlin.map");
-
-		// Base Layer
-
-		
+		// Tile overlay
 		TileLayer over = new TileLayer(mMap);
 		over.setMapDatabase(new MapOptions(MapDatabases.TEST_READER));
 		over.setRenderTheme(InternalRenderTheme.TRONRENDER);
 		mMap.getOverlayManager().add(over);
 
+		// Base Layer
+		MapOptions options = new MapOptions(MapDatabases.PBMAP_READER);
+		options.put("url", "http://city.informatik.uni-bremen.de:80/osmstache/test/");
+		// options.put("url",
+		// "http://city.informatik.uni-bremen.de:80/osci/map-live/");
+
 		TileLayer l = mMap.setBaseMap(options);
+
+		// for now other TileLayer need to be added before the baseLayer
+		// as the last loaded RenderTheme provides the background color
 		l.setRenderTheme(InternalRenderTheme.DEFAULT);
-
-		// configure the MapView and activate the zoomLevel buttons
-		mMap.setClickable(true);
-		mMap.setFocusable(true);
-
-		// MapPosition mapCenter = mMap.getMapFileCenter();
-		// if (mapCenter == null)
-		// mMap.setMapCenter(new MapPosition(new GeoPoint(53.1f, 8.8f),
-		// (byte) 12, 1));
-		// else
-		//
-		// mMap.setMapCenter(mapCenter);
 
 		// mMap.getOverlayManager().add(new GenericOverlay(mMap,new
 		// GridOverlay(mMap)));
+
+		mMap.setClickable(true);
+		mMap.setFocusable(true);
 	}
 
 	@Override
