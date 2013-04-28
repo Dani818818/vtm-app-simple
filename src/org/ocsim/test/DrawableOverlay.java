@@ -44,7 +44,7 @@ public class DrawableOverlay extends Overlay {
 			//mMapPosition.copy(curPos);
 
 			if (!initialized) {
-				// fix at initial position, (see RenderOverlay.setMatrix, how it is used)
+				// fix at initial position, (see RenderLayer.setMatrix, how it is used)
 				mMapPosition.copy(curPos);
 
 				//updateMapPosition();
