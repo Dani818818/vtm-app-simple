@@ -1,6 +1,14 @@
 package org.ocsim.test;
 
+import java.util.ArrayList;
+
+import org.oscim.android.AndroidGraphics;
+import org.oscim.core.GeoPoint;
 import org.oscim.core.MapPosition;
+import org.oscim.layers.overlay.ItemizedIconOverlay;
+import org.oscim.layers.overlay.OverlayItem;
+import org.oscim.layers.overlay.OverlayItem.HotspotPlace;
+import org.oscim.layers.overlay.OverlayMarker;
 import org.oscim.layers.tile.vector.MapTileLayer;
 import org.oscim.theme.InternalRenderTheme;
 import org.oscim.tilesource.TileSource;
@@ -38,6 +46,19 @@ public class MapActivity extends org.oscim.android.MapActivity {
 		//mMap.setBackgroundMap(new BitmapTileLayer(mMap, MapQuestAerial.INSTANCE));
 
 		//mMapView.getLayerManager().add(new GenericOverlay(mMapView, new GridRenderLayer(mMapView)));
+
+		OverlayMarker marker = AndroidGraphics.makeMarker(getResources(),
+				R.drawable.person,
+				HotspotPlace.BOTTOM_CENTER);
+
+		ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+		ItemizedIconOverlay<OverlayItem> overlay = new ItemizedIconOverlay<OverlayItem>(mMapView,
+				items, marker, null);
+
+		OverlayItem item = new OverlayItem("Bremen", "Description", new GeoPoint(53.08, 8.83));
+		overlay.addItem(item);
+
+		mMapView.getLayerManager().add(overlay);
 
 		MapPosition p = new MapPosition();
 		p.setZoomLevel(14);
