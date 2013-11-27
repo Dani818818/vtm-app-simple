@@ -7,6 +7,7 @@ import org.oscim.tilesource.TileSource;
 import org.oscim.tilesource.oscimap4.OSciMap4TileSource;
 import org.oscim.view.MapView;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -18,6 +19,9 @@ public class MapActivity extends org.oscim.android.MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
+
+		// keep initial oriantation
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
 		mMap = (MapView) findViewById(R.id.mapView);
 		mMap.setClickable(true);
